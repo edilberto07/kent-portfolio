@@ -1,130 +1,461 @@
+/* ==========================================================================
+   CYBERPUNK PORTFOLIO — Design tokens, base resets, global utilities
+   Fonts: loaded via next/font in layout.tsx (--font-heading/body/mono)
+   ========================================================================== */
+
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
+/* -------------------------------------------------------------------------- */
+/* Design tokens                                                              */
+/* -------------------------------------------------------------------------- */
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Surfaces */
+  --bg-base: #02040f;
+  --bg-card: rgba(255, 255, 255, 0.02);
+
+  /* Accents */
+  --accent-cyan: #00ffff;
+  --accent-purple: #a855f7;
+  --accent-green: #10b981;
+
+  /* Typography */
+  --text-primary: #e2e8f0;
+  --text-muted: rgba(255, 255, 255, 0.45);
+
+  /* Borders */
+  --border-cyan: rgba(0, 255, 255, 0.12);
+  --border-purple: rgba(168, 85, 247, 0.12);
+
+  /* Effects */
+  --glow-cyan: 0 0 20px rgba(0, 255, 255, 0.35), 0 0 60px rgba(0, 255, 255, 0.1);
+  --glow-purple: 0 0 20px rgba(168, 85, 247, 0.35), 0 0 60px rgba(168, 85, 247, 0.1);
+
+  /* Geometry — sharp/angular clip-path for cards & buttons */
+  --clip-cyber: polygon(
+    12px 0%,
+    100% 0%,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0% 100%,
+    0% 12px
+  );
+
+  /* Font stacks (overridden when next/font sets --font-* on <html>) */
+  --font-heading: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, monospace;
+
+  /* Skill bar gradients */
+  --bar-gradient-cyan: linear-gradient(90deg, rgba(0, 200, 200, 0.6), #00ffff);
+  --bar-gradient-purple: linear-gradient(90deg, rgba(120, 60, 200, 0.6), #a855f7);
+  --bar-gradient-green: linear-gradient(90deg, rgba(20, 160, 100, 0.6), #10b981);
+
+  /* Project badge colors */
+  --badge-web: #38bdf8;
+  --badge-mobile: #34d399;
+  --badge-game: #fbbf24;
+  --badge-hw: #f87171;
+
+  /* Grid & scanline overlays */
+  --grid-size: 60px;
+  --grid-color: rgba(0, 255, 255, 0.04);
+  --scanline-opacity: 0.012;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Tailwind v4 theme bridge */
+@theme inline {
+  --color-bg-base: var(--bg-base);
+  --color-bg-card: var(--bg-card);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-green: var(--accent-green);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-border-cyan: var(--border-cyan);
+  --color-border-purple: var(--border-purple);
+  --color-badge-web: var(--badge-web);
+  --color-badge-mobile: var(--badge-mobile);
+  --color-badge-game: var(--badge-game);
+  --color-badge-hw: var(--badge-hw);
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+  --radius-none: 0;
+  --shadow-glow-cyan: var(--glow-cyan);
+  --shadow-glow-purple: var(--glow-purple);
 }
+
+/* -------------------------------------------------------------------------- */
+/* Base resets                                                                */
+/* -------------------------------------------------------------------------- */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-radius: 0 !important;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
-    @apply font-sans;
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+  }
+
+  a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--text-primary);
+    text-shadow: var(--glow-cyan);
+  }
+
+  ::selection {
+    background: rgba(0, 255, 255, 0.25);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--accent-cyan);
+    outline-offset: 2px;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    border-radius: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Typography utilities                                                       */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .text-glow-cyan {
+    text-shadow: var(--glow-cyan);
+  }
+
+  .text-glow-purple {
+    text-shadow: var(--glow-purple);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Cyber geometry & surfaces                                                  */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .clip-cyber {
+    clip-path: var(--clip-cyber);
+  }
+
+  .cyber-card {
+    clip-path: var(--clip-cyber);
+    background: var(--bg-card);
+    border: 1px solid var(--border-cyan);
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .cyber-card:hover {
+    border-color: rgba(0, 255, 255, 0.35);
+    background: rgba(0, 255, 255, 0.03);
+    transform: translateY(-3px);
+  }
+
+  .cyber-input {
+    clip-path: var(--clip-cyber);
+    background: var(--bg-card);
+    border: 1px solid var(--border-cyan);
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cyber-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .cyber-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.2);
+  }
+
+  .section-divider {
+    height: 1px;
+    width: 100%;
+    border: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--accent-cyan) 30%,
+      var(--accent-purple) 70%,
+      transparent
+    );
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hero atmosphere — grid, scanlines, orbs                                    */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .hero-atmosphere {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+  }
+
+  .hero-scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, var(--scanline-opacity)),
+      rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-orb--cyan {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.18) 0%, transparent 70%);
+  }
+
+  .hero-orb--purple {
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.16) 0%, transparent 70%);
+  }
+
+  .hero-orb--green {
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Status pulse, skill bars, badges                                           */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+    flex-shrink: 0;
+  }
+
+  .status-dot--pulse {
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: var(--glow-cyan);
+    }
+    50% {
+      opacity: 0.5;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-dot--pulse {
+      animation: none;
+    }
+  }
+
+  .skill-bar-track {
+    height: 5px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .skill-bar-fill--cyan {
+    height: 100%;
+    background: var(--bar-gradient-cyan);
+  }
+
+  .skill-bar-fill--purple {
+    height: 100%;
+    background: var(--bar-gradient-purple);
+  }
+
+  .skill-bar-fill--green {
+    height: 100%;
+    background: var(--bar-gradient-green);
+  }
+
+  .badge-web {
+    color: var(--badge-web);
+    border-color: color-mix(in srgb, var(--badge-web) 40%, transparent);
+  }
+
+  .badge-mobile {
+    color: var(--badge-mobile);
+    border-color: color-mix(in srgb, var(--badge-mobile) 40%, transparent);
+  }
+
+  .badge-game {
+    color: var(--badge-game);
+    border-color: color-mix(in srgb, var(--badge-game) 40%, transparent);
+  }
+
+  .badge-hw {
+    color: var(--badge-hw);
+    border-color: color-mix(in srgb, var(--badge-hw) 40%, transparent);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Layout helpers                                                             */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .section-shell {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section-pad {
+    padding-block: 5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .section-pad {
+      padding-block: 7rem;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Scrollbar (cyber aesthetic)                                                */
+/* -------------------------------------------------------------------------- */
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-base);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+    border: 1px solid var(--bg-base);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-cyan) var(--bg-base);
   }
 }
