@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   title: "Kent Tasic | Developer Portfolio",
   description:
     "Portfolio of Kent Edilbert T. Tasic — Full-Stack Developer, Mobile Developer, and BISU Graduate.",
-  // TODO: Add favicon, Open Graph image, and canonical site URL
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
+  // TODO: Add Open Graph image and canonical site URL
 };
 
 export default function RootLayout({

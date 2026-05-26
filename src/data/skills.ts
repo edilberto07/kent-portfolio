@@ -31,6 +31,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "React / Expo", level: 80, color: "purple" },
       { name: "Laravel", level: 75, color: "purple" },
       { name: "Node.js", level: 70, color: "purple" },
+      { name: "MySQL", level: 70, color: "purple" },
       { name: "Flutter", level: 70, color: "purple" },
       { name: "React Native", level: 70, color: "purple" },
       { name: "PHP (vanilla)", level: 65, color: "purple" },
